@@ -1,0 +1,40 @@
+@use '../../scss/variables/colors' as *;
+
+
+.light{
+    .article-form{
+        label{
+            color: $black;
+        }
+        label::after{
+            background-color: $white !important;
+        }
+    }
+}
+
+.dark{
+    .article-form{
+        label{
+            color: $white !important;
+        }
+        label::after{
+            background-color: $main-dark-color !important;
+        }
+    }
+}
+
+.article-cover{
+    height: 10rem;
+    cursor: pointer;
+}
+
+.overlay{
+    background-color: $card-text-color-dark;
+    filter: opacity(.5);
+    -webkit-filter: opacity(.5);
+    font-size: 2rem;
+}
+
+.tag-bg{
+    background-color: rgba(172, 110, 230, 0.686);
+}

@@ -1,0 +1,9 @@
+@use "./base" as *;
+@use "../components/navBar/navbar" as *;
+@use "../components/header/header" as *;
+@use '../components/footer/footer'as *;
+@use "../components/homeComponents/index" as *;
+@use "../components/aboutComponents/about" as *;
+@use "../components/articleFormComponents/add-article" as *;
+@use '../components/articleComponents/article' as *;
+@use '../components/homeComponents/pagination/index' as *;

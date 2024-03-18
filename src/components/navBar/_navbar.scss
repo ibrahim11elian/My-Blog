@@ -1,0 +1,121 @@
+@use "../../scss/variables/colors" as *;
+
+.header {
+  z-index: 100;
+  .container {
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+
+    .header-title {
+      font-weight: 700;
+      user-select: none;
+    }
+
+    .header-link {
+      position: relative;
+      user-select: none;
+    }
+
+    .header-link::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 2px;
+      top: 90%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      -o-transform: translate(-50%, -50%);
+      transition: 0.3s;
+      -webkit-transition: 0.3s;
+      -moz-transition: 0.3s;
+      -ms-transition: 0.3s;
+      -o-transition: 0.3s;
+    }
+
+    .header-link.active::after {
+        width: 50px;
+      }
+
+    @media (hover: hover) {
+      // when hover is supported
+      .header-link:hover::after {
+        width: 50px;
+      }
+    }
+
+    .switcher-container {
+      width: 70px;
+      height: 30px;
+      position: relative;
+      background-color: $white;
+      cursor: pointer;
+    }
+
+    .switcher-container::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      top: 17%;
+      left: 8%;
+      background-color: $main-dark-color;
+      transition: left 0.3s;
+      -webkit-transition: left 0.3s;
+      -moz-transition: left 0.3s;
+      -ms-transition: left 0.3s;
+      -o-transition: left 0.3s;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      -ms-border-radius: 50%;
+      -o-border-radius: 50%;
+}
+
+    #switcher:checked ~ .switcher-container {
+      background-color: $main-dark-color;
+    }
+
+    #switcher:checked ~ .switcher-container::after {
+      left: 63%;
+      background-color: $white;
+    }
+
+    .moon,
+    .sun {
+      font-size: 1.3rem;
+    }
+
+    .moon {
+      color: $main-dark-color;
+    }
+
+    .sun {
+      color: $white;
+    }
+
+    .menu-button {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.dark {
+  .text.active {
+    color: $white;
+  }
+  .header-link::after {
+    background-color: $white;
+  }
+}
+
+.light {
+  .text.active {
+    color: $black;
+  }
+  .header-link::after {
+    background-color: $black;
+  }
+}

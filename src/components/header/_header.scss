@@ -1,0 +1,28 @@
+@use "../../scss/variables/colors" as *;
+
+.blog-section {
+  height: 150px;
+  .blog-section-title {
+    text-transform: uppercase;
+    user-select: none;
+    font-weight: 600;
+    font-size: 2rem;
+    padding: 3rem 0;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    @media only screen and (min-width: 576px) {
+      font-size: 3rem;
+      font-weight: 800;
+      letter-spacing: 0.4rem;
+      padding: 4rem 0;
+    }
+    @media only screen and (min-width: 992px) {
+      font-size: 5rem;
+      letter-spacing: 0.5rem;
+    }
+  }
+
+  @media only screen and (min-width: 576px) {
+    height: 250px;
+  }
+}

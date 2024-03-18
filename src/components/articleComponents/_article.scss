@@ -1,0 +1,49 @@
+@use '../../scss/variables/colors' as *;
+
+.light {
+
+.markdown-container {
+     color: $black;
+    h1,h2,h3,h4,strong{
+        color: $black;
+    }
+
+    code{
+        background-color: #fdf6e3;
+    }
+
+}
+
+}
+
+.dark {
+    
+    .markdown-container {
+   
+        color: $card-text-color-dark;
+       
+        h1,h2,h3,h4,strong,code{
+             color: $white;
+        }
+
+
+        code{
+            background-color: #282c34;
+        }
+    }
+}
+
+.markdown-container{
+    .small-code {    
+    border-radius: 6px;
+    font-size: 85%;
+    margin: 0;
+    padding: 0.2em 0.4em;
+    }
+    pre code {
+            font-size: 1rem;
+        }
+    img{
+        max-width: 100%;
+    }
+}

@@ -1,0 +1,91 @@
+@use "../../scss/variables/colors" as *;
+
+.info {
+  color: $post-info-color;
+  font-size: 0.8rem;
+}
+
+.tag {
+  font-size: 0.8rem;
+}
+
+.article-card{
+  @media screen and (min-width: 992px) {
+    height: 15rem;
+  }
+  img{
+    height: 15rem;
+  }
+}
+
+/* Style the ribbon */
+.ribbon {
+  width: 100px;
+  height: 80px;
+  overflow: hidden;
+  position: absolute;
+  top: -7px;
+  left: -7px;
+}
+
+.ribbon__content {
+  left: -30px;
+    top: 20px;
+    transform: rotate(45deg);
+    position: absolute;
+    display: block;
+    width: 135px;
+    background-color: $hot-badge-background;
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.2);
+    color: #fff;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 0.8rem;
+    border: 2px dotted #fff;
+    -webkit-transform: rotate(321deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    z-index: 10;
+}
+
+.ribbon__content.new{
+  background-color: $new-badge-background
+}
+
+/* Pseudo-elements for ribbon corners */
+.ribbon::before,
+.ribbon::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  border-style: solid;
+  border-width: 5px;
+}
+
+
+.ribbon::before {
+  top: 66px;
+  left: -2px;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-color: $hot-badge-pseudo-color;
+}
+
+.new.ribbon::before{
+  border-color: $new-badge-pseudo-color;
+}
+
+.ribbon::after {
+  top: -2px;
+  left: 83px;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-color: $hot-badge-pseudo-color;
+}
+
+.new.ribbon::after{
+  border-color: $new-badge-pseudo-color;
+}
+
