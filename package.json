@@ -1,7 +1,7 @@
 {
   "name": "my-blog",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "start": "vite --open --port 5000",
@@ -19,7 +19,6 @@
     "@uiw/react-md-editor": "^4.0.3",
     "axios": "^1.6.5",
     "bootstrap": "^5.3.2",
-    "formik": "^2.4.5",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.2",
     "react-dom": "^18.2.0",
