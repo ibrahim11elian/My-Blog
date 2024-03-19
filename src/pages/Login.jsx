@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback, useRef, memo } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { login, updateUser } from "../features/user/user-slice";
+import { login } from "../features/user/user-slice";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import loginValidate from "../validation/login";
@@ -42,7 +42,6 @@ const Login = memo(() => {
       if (!isError) {
         dispatch(login({ userName, password })).then((response) => {
           if (response.payload && response.payload.status === 200) {
-            dispatch(updateUser({ userName: userName }));
             navigate("/admin");
           } else {
             let error = JSON.parse(response.error.message);
