@@ -20,12 +20,7 @@ import { Link, useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { Pagination, PaginationItem } from "@mui/material";
-
-const formatDate = (dateString) => {
-  const options = { day: "numeric", month: "short", year: "numeric" };
-  const date = new Date(dateString);
-  return new Intl.DateTimeFormat("en-US", options).format(date);
-};
+import formatDate from "../utilities/format-date";
 
 function Dashboard() {
   useDocumentTitle("Admin Dashboard");

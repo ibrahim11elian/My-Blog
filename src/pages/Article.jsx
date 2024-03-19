@@ -7,16 +7,11 @@ import { addTag, updateArticle } from "../features/article/article-slice";
 import { lazy } from "react";
 import { Suspense } from "react";
 import readingTime from "reading-time/lib/reading-time";
+import formatDate from "../utilities/format-date";
 
 const MarkdownContent = lazy(() =>
   import("../components/articleComponents/MarkdownContent")
 );
-
-const formatDate = (dateString) => {
-  const options = { day: "numeric", month: "short", year: "numeric" };
-  const date = new Date(dateString);
-  return new Intl.DateTimeFormat("en-US", options).format(date);
-};
 
 function Article() {
   const { id } = useParams();

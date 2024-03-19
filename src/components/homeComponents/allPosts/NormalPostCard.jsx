@@ -2,12 +2,8 @@
 import TruncatedText from "../TruncatedText";
 import { memo } from "react";
 import { Link } from "react-router-dom";
+import formatDate from "../../../utilities/format-date";
 
-const formatDate = (dateString) => {
-  const options = { day: "numeric", month: "short", year: "numeric" };
-  const date = new Date(dateString);
-  return new Intl.DateTimeFormat("en-US", options).format(date);
-};
 function NormalPostCard({ article }) {
   return (
     <div className="col-12 col-sm-6 col-md-4">

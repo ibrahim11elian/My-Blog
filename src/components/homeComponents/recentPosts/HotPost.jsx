@@ -3,14 +3,7 @@ import TruncatedText from "../TruncatedText";
 import { memo, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-
-const formatDate = (dateString) => {
-  if (!dateString) return ""; // Handle null or undefined date
-  const options = { day: "numeric", month: "short", year: "numeric" };
-  const date = new Date(dateString);
-  if (isNaN(date.getTime())) return ""; // Handle invalid date
-  return new Intl.DateTimeFormat("en-US", options).format(date);
-};
+import formatDate from "../../../utilities/format-date";
 
 function HotPost() {
   const [article, setArticle] = useState({});
