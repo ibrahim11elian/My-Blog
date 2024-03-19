@@ -5,6 +5,7 @@ const initialState = {
   userName: localStorage.getItem("user") || "",
   loading: false,
   accessToken: localStorage.getItem("token") || "",
+  isAuthenticated: !!localStorage.getItem("token"),
 };
 
 const userSlice = createSlice({
@@ -21,6 +22,12 @@ const userSlice = createSlice({
       state.accessToken = "";
       localStorage.removeItem("token");
       localStorage.removeItem("user");
+      state.isAuthenticated = false;
+    },
+    checkAuth: (state) => {
+      state.userName = localStorage.getItem("user") || "";
+      state.accessToken = localStorage.getItem("token") || "";
+      state.isAuthenticated = !!localStorage.getItem("token");
     },
   },
   extraReducers: (builder) => {
@@ -32,11 +39,13 @@ const userSlice = createSlice({
         state.loading = false;
         // If login is successful, store the token in localStorage.
         if (payload.status === 200) {
-          const { accessToken } = payload.data;
+          const { accessToken, userName } = payload.data;
           state.accessToken = accessToken;
+          state.userName = userName;
           state.error = "";
           localStorage.setItem("token", accessToken);
-          localStorage.setItem("user", state.userName);
+          localStorage.setItem("user", userName);
+          state.isAuthenticated = true;
         }
       })
       .addCase(login.rejected, (state, { error }) => {
@@ -118,6 +127,6 @@ export const updateUserDate = createAsyncThunk(
   }
 );
 
-export const { updateUser, logoutUser } = userSlice.actions;
+export const { updateUser, logoutUser, checkAuth } = userSlice.actions;
 
 export default userSlice.reducer;
