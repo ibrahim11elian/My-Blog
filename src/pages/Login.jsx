@@ -5,7 +5,6 @@ import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../features/user/user-slice";
 import { useNavigate } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
 import loginValidate from "../validation/login";
 import PasswordInput from "../components/userFormComponents/PasswordInput";
 import UserNameInput from "../components/userFormComponents/UserNameInput";
@@ -14,7 +13,7 @@ import useDocumentTitle from "../hooks/useDocumentTitle";
 const Login = memo(() => {
   useDocumentTitle("Script Symphony - Login");
 
-  const isAuthenticated = useAuth();
+  const { loading, isAuthenticated } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -24,7 +23,6 @@ const Login = memo(() => {
     }
   }, [isAuthenticated, navigate]);
 
-  const { loading } = useSelector((state) => state.user);
   const [error, setError] = useState(null);
 
   const passwordRef = useRef(null);

@@ -4,7 +4,6 @@ import { useTheme } from "../context/ThemeContext";
 import ArticleMetaDataForm from "../components/ArticleFormComponents/ArticleMetaDataForm";
 import { memo, useEffect, useState } from "react";
 import { addArticle, clearArticle } from "../features/article/article-slice";
-import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import articleValidate from "../validation/article-form";
 import useDocumentTitle from "../hooks/useDocumentTitle";
@@ -13,7 +12,7 @@ function AddArticle() {
   useDocumentTitle("Script Symphony - Add Article");
 
   const navigate = useNavigate();
-  const isAuthenticated = useAuth();
+  const { accessToken, isAuthenticated } = useSelector((store) => store.user);
 
   useEffect(() => {
     scrollTo({ top: 0 });
@@ -31,8 +30,6 @@ function AddArticle() {
   const loading = useSelector((store) => store.article.loading);
 
   const dispatch = useDispatch();
-
-  const { accessToken } = useSelector((store) => store.user);
 
   const [cover, setCover] = useState(null);
   const [error, setError] = useState(null);

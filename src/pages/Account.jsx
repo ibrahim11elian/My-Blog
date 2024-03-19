@@ -1,7 +1,6 @@
 import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import PasswordInput from "../components/userFormComponents/PasswordInput";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -14,7 +13,7 @@ export default function Account() {
   useDocumentTitle("Admin Account");
 
   const navigate = useNavigate();
-  const isAuthenticated = useAuth();
+  const { isAuthenticated } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {

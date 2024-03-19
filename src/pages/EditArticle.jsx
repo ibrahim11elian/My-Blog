@@ -10,12 +10,11 @@ import {
   updateArticleData,
 } from "../features/article/article-slice";
 import axios from "axios";
-import useAuth from "../hooks/useAuth";
 import articleValidate from "../validation/article-form";
 
 function EditArticle() {
   const navigate = useNavigate();
-  const isAuthenticated = useAuth();
+  const { accessToken, isAuthenticated } = useSelector((store) => store.user);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -55,7 +54,6 @@ function EditArticle() {
 
   const [error, setError] = useState(null);
 
-  const { accessToken } = useSelector((store) => store.user);
   const [cover, setCover] = useState(null);
 
   const handleSubmit = async (id) => {
