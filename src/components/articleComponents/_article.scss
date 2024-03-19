@@ -22,7 +22,7 @@
    
         color: $card-text-color-dark;
        
-        h1,h2,h3,h4,strong,code{
+        h1,h2,h3,h4,strong{
              color: $white;
         }
 
@@ -36,7 +36,6 @@
 .markdown-container{
     .small-code {    
     border-radius: 6px;
-    font-size: 85%;
     margin: 0;
     padding: 0.2em 0.4em;
     }
