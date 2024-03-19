@@ -17,9 +17,11 @@ function EditArticle() {
   const navigate = useNavigate();
   const isAuthenticated = useAuth();
 
-  if (!isAuthenticated) {
-    navigate("/login");
-  }
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    }
+  }, [isAuthenticated, navigate]);
 
   const { theme } = useTheme();
   const { id } = useParams();

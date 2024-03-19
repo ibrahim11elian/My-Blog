@@ -11,7 +11,7 @@ import {
   GridToolbar,
 } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   deleteArticle,
   fetchAllArticlesData,
@@ -31,7 +31,7 @@ function Dashboard() {
   useDocumentTitle("Admin Dashboard");
 
   const navigate = useNavigate();
-  const isAuthenticated = useAuth();
+  const { isAuthenticated } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -98,7 +98,8 @@ function Dashboard() {
           <div className="d-flex justify-content-between">
             <h3 className="mb-0">Dashboard</h3>
             <Link
-              to={"/add-article"}
+              to={isAuthenticated ? "/add-article" : "/login"}
+              onClick={() => dispatch(checkAuth())}
               className="btn btn-outline-secondary text"
             >
               <IoIosAdd className="mr-3" style={{ fontSize: "1.5rem" }} />
@@ -192,46 +193,86 @@ function CustomPagination() {
 
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import useAuth from "../hooks/useAuth";
 import axios from "axios";
 import { clearArticle } from "../features/article/article-slice";
 import useDocumentTitle from "../hooks/useDocumentTitle";
+import { checkAuth } from "../features/user/user-slice";
 
 // eslint-disable-next-line react/prop-types
 const OperationButtons = ({ row }) => {
+  const { isAuthenticated, accessToken } = useSelector((state) => state.user);
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const handleEdit = (row) => {
-    navigate(`/edit-article/${row.id}`);
-  };
+  const [actionType, setActionType] = useState(null); // State to track action type
+  const [itemId, setItemId] = useState(null); // ID of the item
 
-  const [loading, setLoading] = useState(false);
-  const { accessToken } = useSelector((store) => store.user);
+  // Function to handle edit
+  const handleEdit = useCallback(
+    (row) => {
+      dispatch(checkAuth());
+      setActionType("edit"); // Set action type to 'edit'
+      setItemId(row.id);
+    },
+    [dispatch]
+  );
 
+  // Function to handle delete
   const handleDelete = async (id) => {
-    if (window.confirm("Are you sure to delete this article?")) {
-      try {
-        setLoading(true);
-        const res = await axios.delete(
-          `http://localhost:3000/api/article/${id}`,
-          {
-            headers: {
-              authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-        setLoading(false);
-
-        if (res.status === 204) {
-          dispatch(deleteArticle(id));
-          alert(`Deleted article with id : ${id}`);
-        }
-      } catch (error) {
-        setLoading(false);
-        console.log(error);
-      }
-    }
+    dispatch(checkAuth());
+    setActionType("delete"); // Set action type to 'delete'
+    setItemId(id);
   };
+  // Effect to navigate based on isAuthenticated changes
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    } else {
+      // Check actionType and perform specific actions
+      if (actionType === "edit") {
+        navigate(`/edit-article/${itemId}`);
+      } else if (actionType === "delete") {
+        // Perform delete action
+        const handleDelete = async (id) => {
+          if (window.confirm("Are you sure to delete this article?")) {
+            try {
+              setLoading(true);
+              const res = await axios.delete(
+                `http://localhost:3000/api/article/${id}`,
+                {
+                  headers: {
+                    authorization: `Bearer ${accessToken}`,
+                  },
+                }
+              );
+              setLoading(false);
+
+              if (res.status === 204) {
+                dispatch(deleteArticle(id));
+                alert(`Deleted article with id : ${id}`);
+              }
+            } catch (error) {
+              setLoading(false);
+              console.log(error);
+            }
+          }
+        };
+        handleDelete(itemId);
+      }
+      // Reset actionType after performing action
+      setActionType(null);
+    }
+  }, [
+    isAuthenticated,
+    navigate,
+    actionType,
+    row.id,
+    itemId,
+    accessToken,
+    dispatch,
+  ]);
+
   return (
     <div className="d-flex gap-2 align-items-center">
       <FiEdit

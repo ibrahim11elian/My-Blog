@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import PasswordInput from "../components/userFormComponents/PasswordInput";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import NewPasswordInput from "../components/userFormComponents/NewPasswordInput";
 import accountValidate from "../validation/account";
 import { updateUser, updateUserDate } from "../features/user/user-slice";
@@ -16,9 +16,12 @@ export default function Account() {
   const navigate = useNavigate();
   const isAuthenticated = useAuth();
   const dispatch = useDispatch();
-  if (!isAuthenticated) {
-    navigate("/login");
-  }
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    }
+  }, [isAuthenticated, navigate]);
 
   const userNameRef = useRef(null);
   const oldPassRef = useRef(null);

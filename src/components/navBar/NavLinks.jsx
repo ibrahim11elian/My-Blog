@@ -4,7 +4,7 @@ import { Nav } from "react-bootstrap";
 import { memo } from "react";
 import { MdOutlineManageAccounts } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutUser } from "../../features/user/user-slice";
+import { checkAuth, logoutUser } from "../../features/user/user-slice";
 
 function NavLinks() {
   // this for Authentication burps instead of the isAuthenticated
@@ -52,14 +52,14 @@ export default memo(NavLinks);
 const UserLinks = memo(() => {
   // this for Authentication burps instead of the isAuthenticated
   // as the isAuthenticated does not trigger rerender when user state change IDK why!!
-  const accessToken = useSelector((state) => state.user.accessToken);
+  const { isAuthenticated } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // logout user function to remove the user data from slice and local storage
   const handleLogout = () => {
-    if (accessToken) {
+    if (isAuthenticated) {
       dispatch(logoutUser());
       navigate("/login");
     }
@@ -67,7 +67,7 @@ const UserLinks = memo(() => {
   return (
     <>
       {/* Only show the manage accounts link if user is authenticated (logged in) */}
-      {accessToken ? (
+      {isAuthenticated ? (
         <>
           <NavLink
             to={"/admin"}
@@ -88,6 +88,7 @@ const UserLinks = memo(() => {
 
           <NavLink
             to={"/account"}
+            onClick={() => dispatch(checkAuth())}
             className="nav-link  text text-center p-0 ms-sm-2 "
             style={{ fontSize: "1.6rem" }}
           >
