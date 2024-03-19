@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
+import rehypeSlug from "rehype-slug";
 import CodeHighlighter from "./CodeHighlighter";
 import { useSelector } from "react-redux";
 
@@ -12,7 +13,7 @@ function MarkdownContent() {
     () => (
       <Markdown
         remarkPlugins={[remarkGfm]}
-        rehypePlugins={[rehypeRaw]}
+        rehypePlugins={[rehypeSlug, rehypeRaw]}
         components={{
           code: CodeHighlighter,
           a: ({ children, ...props }) => (
