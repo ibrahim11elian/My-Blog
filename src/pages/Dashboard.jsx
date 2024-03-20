@@ -12,10 +12,7 @@ import {
 } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  deleteArticle,
-  fetchAllArticlesData,
-} from "../features/articles/all-articles-slice";
+import { fetchAllArticlesData } from "../features/articles/all-articles-slice";
 import { Link, useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
@@ -188,21 +185,20 @@ function CustomPagination() {
 
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import axios from "axios";
 import { clearArticle } from "../features/article/article-slice";
 import useDocumentTitle from "../hooks/useDocumentTitle";
 import { checkAuth } from "../features/user/user-slice";
-import notify from "../utilities/alert-toastify";
+import Confirm from "../components/Confirm";
 
 // eslint-disable-next-line react/prop-types
 const OperationButtons = ({ row }) => {
   const { isAuthenticated, accessToken } = useSelector((state) => state.user);
-  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [actionType, setActionType] = useState(null); // State to track action type
   const [itemId, setItemId] = useState(null); // ID of the item
+  const [showModal, setShowModal] = useState(false);
 
   // Function to handle edit
   const handleEdit = useCallback(
@@ -215,10 +211,9 @@ const OperationButtons = ({ row }) => {
   );
 
   // Function to handle delete
-  const handleDelete = async (id) => {
+  const handleDelete = async () => {
     dispatch(checkAuth());
     setActionType("delete"); // Set action type to 'delete'
-    setItemId(id);
   };
   // Effect to navigate based on isAuthenticated changes
   useEffect(() => {
@@ -229,32 +224,7 @@ const OperationButtons = ({ row }) => {
       if (actionType === "edit") {
         navigate(`/edit-article/${itemId}`);
       } else if (actionType === "delete") {
-        // Perform delete action
-        const handleDelete = async (id) => {
-          if (window.confirm("Are you sure to delete this article?")) {
-            try {
-              setLoading(true);
-              const res = await axios.delete(
-                `http://localhost:3000/api/article/${id}`,
-                {
-                  headers: {
-                    authorization: `Bearer ${accessToken}`,
-                  },
-                }
-              );
-              setLoading(false);
-
-              if (res.status === 204) {
-                dispatch(deleteArticle(id));
-                notify(`Deleted article with id : ${id}`, "success");
-              }
-            } catch (error) {
-              setLoading(false);
-              console.log(error);
-            }
-          }
-        };
-        handleDelete(itemId);
+        setShowModal(true);
       }
       // Reset actionType after performing action
       setActionType(null);
@@ -279,19 +249,14 @@ const OperationButtons = ({ row }) => {
         onClick={() => handleEdit(row)}
       />
 
-      {loading ? (
-        <span
-          className="spinner-border spinner-border-sm"
-          aria-hidden="true"
-        ></span>
-      ) : (
-        <RiDeleteBin6Line
-          fontSize={"1.6rem"}
-          cursor={"pointer"}
-          color="red"
-          onClick={() => handleDelete(row.id)}
-        />
-      )}
+      <RiDeleteBin6Line
+        fontSize={"1.6rem"}
+        cursor={"pointer"}
+        color="red"
+        onClick={() => handleDelete()}
+      />
+
+      <Confirm show={showModal} setShow={setShowModal} id={row.id} />
     </div>
   );
 };
