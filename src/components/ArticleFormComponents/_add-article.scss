@@ -15,7 +15,7 @@
 .dark{
     .article-form{
         label{
-            color: $white !important;
+            color: $card-text-color-dark !important;
         }
         label::after{
             background-color: $main-dark-color !important;
