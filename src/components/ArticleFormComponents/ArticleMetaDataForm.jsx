@@ -167,7 +167,7 @@ const ArticleCover = memo(function ArticleCover({ error, cover, setCover }) {
             />
           ) : (
             <div className="overlay w-100 h-100 d-flex justify-content-center align-items-center">
-              <RiImageAddLine />
+              <RiImageAddLine color="black" />
             </div>
           )}
         </div>
