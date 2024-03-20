@@ -7,6 +7,7 @@ import { addArticle, clearArticle } from "../features/article/article-slice";
 import { useNavigate } from "react-router-dom";
 import articleValidate from "../validation/article-form";
 import useDocumentTitle from "../hooks/useDocumentTitle";
+import notify from "../utilities/alert-toastify";
 
 function AddArticle() {
   useDocumentTitle("Script Symphony - Add Article");
@@ -42,7 +43,7 @@ function AddArticle() {
       dispatch(addArticle({ article, cover, accessToken })).then((response) => {
         if (response.payload.code === 201) {
           navigate(`/admin`);
-          alert("Your article has been posted!");
+          notify("Your article has been posted!", "success");
         } else {
           let error = JSON.parse(response.error.message);
           console.log(error);

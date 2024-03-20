@@ -8,6 +8,7 @@ import NewPasswordInput from "../components/userFormComponents/NewPasswordInput"
 import accountValidate from "../validation/account";
 import { updateUser, updateUserDate } from "../features/user/user-slice";
 import useDocumentTitle from "../hooks/useDocumentTitle";
+import notify from "../utilities/alert-toastify";
 
 export default function Account() {
   useDocumentTitle("Admin Account");
@@ -60,6 +61,7 @@ export default function Account() {
         ).then((response) => {
           if (response.payload && response.payload.status === 200) {
             dispatch(updateUser({ userName: response.payload.data.userName }));
+            notify("Successfully updated profile!", "success");
             navigate("/admin");
           } else {
             let error = JSON.parse(response.error.message);

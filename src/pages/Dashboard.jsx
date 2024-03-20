@@ -192,6 +192,7 @@ import axios from "axios";
 import { clearArticle } from "../features/article/article-slice";
 import useDocumentTitle from "../hooks/useDocumentTitle";
 import { checkAuth } from "../features/user/user-slice";
+import notify from "../utilities/alert-toastify";
 
 // eslint-disable-next-line react/prop-types
 const OperationButtons = ({ row }) => {
@@ -245,7 +246,7 @@ const OperationButtons = ({ row }) => {
 
               if (res.status === 204) {
                 dispatch(deleteArticle(id));
-                alert(`Deleted article with id : ${id}`);
+                notify(`Deleted article with id : ${id}`, "success");
               }
             } catch (error) {
               setLoading(false);

@@ -12,12 +12,15 @@ import EditArticle from "./pages/EditArticle";
 import Login from "./pages/Login";
 import Account from "./pages/Account";
 import Error from "./pages/Error";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const { theme } = useTheme();
 
   return (
     <div className={`app ${theme} `}>
+      {/* Display toast messages */}
+      <ToastContainer stacked />
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />

@@ -9,6 +9,7 @@ import {
   updateArticleData,
 } from "../features/article/article-slice";
 import articleValidate from "../validation/article-form";
+import notify from "../utilities/alert-toastify";
 
 function EditArticle() {
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ function EditArticle() {
       ).then((response) => {
         if (response.payload.code === 200) {
           navigate(`/admin`);
-          alert("Your article has been updated!");
+          notify("Your article has been updated!", "success");
         } else {
           let error = JSON.parse(response.error.message);
           console.log(error);
