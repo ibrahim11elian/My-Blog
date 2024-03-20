@@ -35,8 +35,7 @@ function EditArticle() {
         navigate("/404");
       }
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [dispatch, id, navigate]);
 
   const [error, setError] = useState(null);
 
@@ -94,15 +93,26 @@ export default memo(EditArticle);
 
 const ContentPlaceholder = () => {
   return (
-    <div className="text placeholder-glow mt-5">
-      <h1 className="placeholder rounded-1 col-5 me-2"></h1>
-      <h1 className="placeholder rounded-1 col-5 me-2"></h1>
-      <h1 className="placeholder rounded-1 col-5 me-2"></h1>
-      <h1 className="placeholder rounded-1 col-5 me-2"></h1>
-      <div style={{ height: "25rem" }} className="pb-3">
+    <>
+      <div className="text placeholder-glow mt-5 d-flex gap-2 flex-wrap justify-content-center align-items-center">
+        <h1 className="placeholder rounded-1 mb-0 col-12 col-sm-6 col-md-4"></h1>
+        <h1 className="placeholder rounded-1 mb-0 col-12 col-sm-6 col-md-4"></h1>
+        <h1 className="placeholder rounded-1 mb-0 col-12 col-sm-6 col-md-4"></h1>
+        <h1 className="placeholder rounded-1 mb-0 col-12 col-sm-6 col-md-4"></h1>
+        <div
+          style={{ height: "10rem" }}
+          className=" mb-0 col-12 col-sm-6 col-md-4"
+        >
+          <span className="placeholder rounded-1 col-12 h-100"></span>
+        </div>
+      </div>
+      <div
+        style={{ height: "25rem" }}
+        className="text pb-3 placeholder-glow mt-2"
+      >
         <span className="placeholder rounded-1 col-12 h-100"></span>
       </div>
-    </div>
+    </>
   );
 };
 
