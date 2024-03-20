@@ -29,6 +29,7 @@ const articleValidate = (values) => {
     values.content.split("\n").filter((item) => item != "").length <= 15
   ) {
     errors.content = "Your content should contain more than 15 lines.";
+    isError = true;
   }
 
   const linkRegEx =
