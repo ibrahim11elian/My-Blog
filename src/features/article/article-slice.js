@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { deleteArticle } from "../articles/all-articles-slice";
 
 const initialState = {
   date: `${new Date()}`,
@@ -101,6 +102,19 @@ const articleSlice = createSlice({
 
         state.loading = false;
         state.error = error.data;
+      })
+      .addCase(deleteArticleAsync.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteArticleAsync.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(deleteArticleAsync.rejected, (state, { error }) => {
+        state.loading = false;
+        error = JSON.parse(error.message);
+
+        state.loading = false;
+        state.error = error.data;
       });
   },
 });
@@ -174,6 +188,30 @@ export const updateArticleData = createAsyncThunk(
       );
 
       return res.data;
+    } catch (error) {
+      throw new Error(JSON.stringify(error.response));
+    }
+  }
+);
+
+export const deleteArticleAsync = createAsyncThunk(
+  "article/deleteArticleAsync",
+  async ({ id, accessToken }, { dispatch }) => {
+    try {
+      const res = await axios.delete(
+        `http://localhost:3000/api/article/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      if (res.status === 204) {
+        dispatch(deleteArticle(id));
+      }
+
+      return { status: res.status };
     } catch (error) {
       throw new Error(JSON.stringify(error.response));
     }
