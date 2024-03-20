@@ -1,9 +1,7 @@
 import { memo, useEffect } from "react";
-// import img from "../assets/article-img.png";
-import { useParams } from "react-router-dom";
-import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addTag, updateArticle } from "../features/article/article-slice";
+import { fetchArticle } from "../features/article/article-slice";
 import { lazy } from "react";
 import { Suspense } from "react";
 import readingTime from "reading-time/lib/reading-time";
@@ -17,26 +15,16 @@ function Article() {
   const { id } = useParams();
   const article = useSelector((store) => store.article);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await axios.get(`http://localhost:3000/api/article/${id}`);
-
-        document.title = res.data.title;
-        dispatch(updateArticle({ ...res.data }));
-        if (res.data.tags && res.data.tags.length) {
-          res.data.tags.forEach((tag) => {
-            dispatch(addTag({ newTag: tag, maxTags: 5 }));
-          });
-        }
-      } catch (error) {
-        console.log(error);
+    dispatch(fetchArticle({ id })).then((response) => {
+      if (response.payload && response.payload.status === 200) {
+        document.title = response.payload.title;
+      } else {
+        navigate("/404");
       }
-    }
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+    });
+  }, [dispatch, id, navigate]);
 
   useEffect(() => scrollTo({ top: 0 }), []);
 
@@ -50,7 +38,7 @@ function Article() {
           <img
             src={article.cover}
             className=" object-fit-cover w-100 h-100 "
-            alt="sass"
+            alt={article.title}
           />
         </div>
         <div className="d-flex flex-column mt-4 px-md-5 mx-md-5">
@@ -66,8 +54,11 @@ function Article() {
             <div className="badges d-flex flex-wrap gap-2 mt-auto ">
               {article.tags.map((tag, index) => {
                 return (
-                  <span key={index} className="tag px-3 py-1 rounded-5">
-                    {tag.tag}
+                  <span
+                    key={`${index}-${tag}`}
+                    className="tag px-3 py-1 rounded-5"
+                  >
+                    {tag}
                   </span>
                 );
               })}

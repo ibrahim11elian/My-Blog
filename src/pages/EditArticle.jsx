@@ -5,11 +5,9 @@ import ArticleMetaDataForm from "../components/ArticleFormComponents/ArticleMeta
 import { memo, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
-  addTag,
-  updateArticle,
+  fetchArticle,
   updateArticleData,
 } from "../features/article/article-slice";
-import axios from "axios";
 import articleValidate from "../validation/article-form";
 
 function EditArticle() {
@@ -25,30 +23,18 @@ function EditArticle() {
   const { theme } = useTheme();
   const { id } = useParams();
   const article = useSelector((store) => store.article);
+  const { loading } = useSelector((store) => store.article);
   const dispatch = useDispatch();
 
-  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    async function fetchData() {
-      try {
-        setLoading(true);
-        document.title = "loading...";
-        const res = await axios.get(`http://localhost:3000/api/article/${id}`);
-        document.title = res.data.title;
-
-        dispatch(updateArticle({ ...res.data }));
-
-        res.data.tags.forEach((tag) =>
-          dispatch(addTag({ newTag: tag.tag, maxTags: 100 }))
-        );
-
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-        console.log(error);
+    document.title = "loading...";
+    dispatch(fetchArticle({ id })).then((response) => {
+      if (response.payload && response.payload.status === 200) {
+        document.title = response.payload.title;
+      } else {
+        navigate("/404");
       }
-    }
-    fetchData();
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 

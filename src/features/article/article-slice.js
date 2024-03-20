@@ -88,6 +88,19 @@ const articleSlice = createSlice({
 
         state.loading = false;
         state.error = error.data;
+      })
+      .addCase(fetchArticle.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchArticle.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(fetchArticle.rejected, (state, { error }) => {
+        state.loading = false;
+        error = JSON.parse(error.message);
+
+        state.loading = false;
+        state.error = error.data;
       });
   },
 });
@@ -114,6 +127,26 @@ export const addArticle = createAsyncThunk(
       );
 
       return res.data;
+    } catch (error) {
+      throw new Error(JSON.stringify(error.response));
+    }
+  }
+);
+
+export const fetchArticle = createAsyncThunk(
+  "article/fetchArticleAsync",
+  async ({ id }, { dispatch }) => {
+    try {
+      const res = await axios.get(`http://localhost:3000/api/article/${id}`);
+      const articleData = res.data;
+      dispatch(updateArticle(articleData)); // Dispatching updateArticle action to update the state
+      if (articleData.tags && articleData.tags.length) {
+        articleData.tags.forEach((tag) => {
+          dispatch(addTag({ newTag: tag.tag, maxTags: 5 })); // Dispatching addTag action
+        });
+      }
+
+      return { status: res.status, title: articleData.title };
     } catch (error) {
       throw new Error(JSON.stringify(error.response));
     }

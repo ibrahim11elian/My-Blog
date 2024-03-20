@@ -74,7 +74,7 @@ const TagField = () => {
             key={`${index}-${tag}`}
             className="d-inline-flex justify-content-center align-items-center rounded-pill text-sm shadow-sm font-medium tag-bg text-white px-2"
           >
-            {tag}
+            {tag.tag ? tag.tag : tag}
             <button
               className="ms-1 btn text-black px-1 py-1"
               onClick={() => dispatch(removeTag({ tag: tag }))}
