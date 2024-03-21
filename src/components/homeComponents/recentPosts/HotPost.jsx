@@ -72,13 +72,13 @@ export default memo(HotPost);
 
 const PlaceholderComponent = () => {
   return (
-    <div className="card col-12 col-lg-6 shadow border-none rounded">
+    <div className="card col-12 col-lg-6 shadow border-none rounded text">
       <div className=" placeholder-glow" style={{ height: "15rem" }}>
         <span className="placeholder col-12 h-100"></span>
       </div>
 
-      <div className="card-body background rounded-bottom d-flex flex-column">
-        <p className=" d-flex gap-1 placeholder-glow mb-1">
+      <div className="card-body background rounded-bottom d-flex flex-column text">
+        <p className=" d-flex gap-1 placeholder-glow mb-1 text">
           <span className="placeholder rounded-1 col-3"></span>
         </p>
         <h5 className=" placeholder-glow rounded-1">
