@@ -16,6 +16,8 @@ function Article() {
   const article = useSelector((store) => store.article);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // Fetch the article on mount if it's not already in the store
   useEffect(() => {
     dispatch(fetchArticle({ id })).then((response) => {
       if (response.payload && response.payload.status === 200) {

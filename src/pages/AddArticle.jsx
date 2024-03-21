@@ -23,8 +23,7 @@ function AddArticle() {
     if (!isAuthenticated) {
       navigate("/login");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch, isAuthenticated, navigate]);
 
   const { theme } = useTheme();
   const article = useSelector((store) => store.article);
