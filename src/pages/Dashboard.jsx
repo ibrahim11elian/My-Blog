@@ -18,19 +18,28 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { Pagination, PaginationItem } from "@mui/material";
 import formatDate from "../utilities/format-date";
+import { FiEdit } from "react-icons/fi";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { clearArticle } from "../features/article/article-slice";
+import useDocumentTitle from "../hooks/useDocumentTitle";
+import { checkAuth } from "../features/user/user-slice";
+import Confirm from "../components/Confirm";
 
 function Dashboard() {
+  // Set document title
   useDocumentTitle("Admin Dashboard");
 
+  // Hooks
   const navigate = useNavigate();
   const { isAuthenticated } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
+  // Clear article state on component mount
   useEffect(() => {
     dispatch(clearArticle());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
+  // Fetch all articles when isAuthenticated changes
   useEffect(() => {
     if (!isAuthenticated) {
       navigate("/login");
@@ -39,8 +48,10 @@ function Dashboard() {
     }
   }, [isAuthenticated, dispatch, navigate]);
 
+  // Select articles data and loading state
   const { data, loading } = useSelector((state) => state.allArticles);
 
+  // Define table columns
   const columns = useMemo(
     () => [
       { field: "title", headerName: "Article Title", width: 300 },
@@ -71,6 +82,7 @@ function Dashboard() {
     []
   );
 
+  // Show loading spinner if data is being loaded
   if (loading || !data) {
     return (
       <div className="background">
@@ -86,9 +98,11 @@ function Dashboard() {
   return (
     <div className="background">
       <div className="container">
+        {/* Dashboard section */}
         <section className="dashboard text py-4">
           <div className="d-flex justify-content-between">
             <h3 className="mb-0">Dashboard</h3>
+            {/* Link to add article page */}
             <Link
               to={isAuthenticated ? "/add-article" : "/login"}
               onClick={() => dispatch(checkAuth())}
@@ -98,7 +112,9 @@ function Dashboard() {
               Add Article
             </Link>
           </div>
+          {/* Article stats */}
           <div className="d-flex flex-wrap justify-content-center justify-content-sm-start  gap-2 mt-3">
+            {/* Total Articles */}
             <div className="card background rounded p-3 d-flex flex-row gap-2 align-items-center border-color">
               <div className="icon text">
                 <LuFileText
@@ -112,6 +128,7 @@ function Dashboard() {
                 </div>
               </div>
             </div>
+            {/* Total Views */}
             <div className="card background rounded p-3 d-flex flex-row gap-2 align-items-center border-color">
               <div className="icon text">
                 <IoEyeOutline
@@ -130,9 +147,11 @@ function Dashboard() {
           </div>
         </section>
 
+        {/* All Articles section */}
         <section className="text py-4">
           <h3 className="mb-0">All Articles</h3>
           <div className="mt-3" style={{ height: 400, width: "100%" }}>
+            {/* DataGrid component */}
             <DataGrid
               rows={data}
               columns={columns}
@@ -159,6 +178,7 @@ function Dashboard() {
 }
 export default Dashboard;
 
+// Custom pagination component
 function CustomPagination() {
   const apiRef = useGridApiContext();
   const page = useGridSelector(apiRef, gridPageSelector);
@@ -183,14 +203,7 @@ function CustomPagination() {
   );
 }
 
-import { FiEdit } from "react-icons/fi";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { clearArticle } from "../features/article/article-slice";
-import useDocumentTitle from "../hooks/useDocumentTitle";
-import { checkAuth } from "../features/user/user-slice";
-import Confirm from "../components/Confirm";
-
-// eslint-disable-next-line react/prop-types
+// Operation buttons component
 const OperationButtons = ({ row }) => {
   const { isAuthenticated, accessToken } = useSelector((state) => state.user);
 
@@ -245,7 +258,6 @@ const OperationButtons = ({ row }) => {
         fontSize={"1.5rem"}
         cursor={"pointer"}
         color="#3b82f6"
-        // eslint-disable-next-line react/prop-types
         onClick={() => handleEdit(row)}
       />
 
