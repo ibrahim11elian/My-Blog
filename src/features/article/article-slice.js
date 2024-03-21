@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { deleteArticle } from "../articles/all-articles-slice";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const initialState = {
   date: `${new Date()}`,
   title: "",
@@ -130,15 +132,11 @@ export const addArticle = createAsyncThunk(
     );
     formData.append("cover", cover);
     try {
-      const res = await axios.post(
-        "http://localhost:3000/api/article",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+      const res = await axios.post(`${API_URL}/article`, formData, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
 
       return res.data;
     } catch (error) {
@@ -151,7 +149,7 @@ export const fetchArticle = createAsyncThunk(
   "article/fetchArticleAsync",
   async ({ id }, { dispatch }) => {
     try {
-      const res = await axios.get(`http://localhost:3000/api/article/${id}`);
+      const res = await axios.get(`${API_URL}/article/${id}`);
       const articleData = res.data;
       dispatch(updateArticle(articleData)); // Dispatching updateArticle action to update the state
       if (articleData.tags && articleData.tags.length) {
@@ -177,15 +175,11 @@ export const updateArticleData = createAsyncThunk(
       formData.append("cover", cover);
     }
     try {
-      const res = await axios.put(
-        `http://localhost:3000/api/article/${articleId}`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+      const res = await axios.put(`${API_URL}/article/${articleId}`, formData, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
 
       return res.data;
     } catch (error) {
@@ -198,14 +192,11 @@ export const deleteArticleAsync = createAsyncThunk(
   "article/deleteArticleAsync",
   async ({ id, accessToken }, { dispatch }) => {
     try {
-      const res = await axios.delete(
-        `http://localhost:3000/api/article/${id}`,
-        {
-          headers: {
-            authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+      const res = await axios.delete(`${API_URL}/article/${id}`, {
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+        },
+      });
 
       if (res.status === 204) {
         dispatch(deleteArticle(id));

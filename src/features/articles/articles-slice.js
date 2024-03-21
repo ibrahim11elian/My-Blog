@@ -1,12 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 // Define the async thunk for fetching articles data
 export const fetchArticlesData = createAsyncThunk(
   "articles/fetchArticlesData",
   async ({ page, itemsPerPage }) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/article?page=${page}&itemsPerPage=${itemsPerPage}`
+        `${API_URL}/article?page=${page}&itemsPerPage=${itemsPerPage}`
       );
       const jsonData = await response.json();
       return jsonData;
