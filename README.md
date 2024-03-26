@@ -8,10 +8,11 @@ Script Symphony is a coding blog site where users can write, manage, and publish
 2. [Features](#features)
 3. [Technologies Used](#technologies-used)
 4. [Setup](#setup)
-5. [Available Scripts](#available-scripts)
-6. [Usage](#usage)
-7. [Notes](#notes)
-8. [Contact](#contact)
+5. [Environment Variables](#environment-variables)
+6. [Available Scripts](#available-scripts)
+7. [Usage](#usage)
+8. [Notes](#notes)
+9. [Contact](#contact)
 
 ## Folder Structure
 
@@ -121,6 +122,18 @@ Script Symphony is a coding blog site where users can write, manage, and publish
    ```
 
 The application will be accessible at `http://localhost:5000`.
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file. Make sure to replace the values with your own configuration:
+
+```plaintext
+VITE_API_URL={Your API URL}
+```
+
+This variable specifies the API URL used for fetching data from the backend server. You need to replace `{Your API URL}` with your API URL
+
+**Note:** The Backend repository is currently under development and once it 's ready, I will provide a link here.
 
 ## Available Scripts
 
