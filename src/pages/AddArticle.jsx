@@ -14,6 +14,7 @@ function AddArticle() {
 
   const navigate = useNavigate();
   const { accessToken, isAuthenticated } = useSelector((store) => store.user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     scrollTo({ top: 0 });
@@ -28,8 +29,6 @@ function AddArticle() {
   const { theme } = useTheme();
   const article = useSelector((store) => store.article);
   const loading = useSelector((store) => store.article.loading);
-
-  const dispatch = useDispatch();
 
   const [cover, setCover] = useState(null);
   const [error, setError] = useState(null);
