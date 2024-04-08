@@ -2,6 +2,8 @@
 
 Script Symphony is a coding blog site where users can write, manage, and publish blog articles. It fetches data from a backend server, allowing users to perform various actions such as creating, updating, and deleting articles. Articles are written in Markdown format and can include metadata such as title, author name, description, tags, cover image, and content.
 
+**Note**: This rebo has a backend, you can access it from [Here](https://github.com/ibrahim11elian/scriptSymphony-backend)
+
 ## Table of Contents
 
 1. [Folder Structure](#folder-structure)
@@ -133,7 +135,7 @@ VITE_API_URL={Your API URL}
 
 This variable specifies the API URL used for fetching data from the backend server. You need to replace `{Your API URL}` with your API URL
 
-**Note:** The Backend repository is currently under development and once it 's ready, I will provide a link here.
+**Note:** The Backend repository is currently Available at [Github](https://github.com/ibrahim11elian/scriptSymphony-backend).
 
 ## Available Scripts
 
