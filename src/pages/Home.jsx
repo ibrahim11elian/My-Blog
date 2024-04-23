@@ -12,7 +12,7 @@ function Home() {
   useDocumentTitle("Script Symphony");
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchArticlesData());
+    dispatch(fetchArticlesData({ page: 1, itemsPerPage: 6 }));
     dispatch(fetchRecentArticlesData());
   }, [dispatch]);
 

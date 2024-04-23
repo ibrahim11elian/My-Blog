@@ -26,8 +26,8 @@ export const articlesSlice = createSlice({
     loading: false,
     error: null,
     currentPage: 1,
-    itemsPerPage: 6, // Adjust as needed
-    totalItems: 0, // Populate this value when fetching data
+    itemsPerPage: 6,
+    totalItems: 0,
   },
   reducers: {
     setCurrentPage: (state, { payload }) => {
