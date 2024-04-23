@@ -21,7 +21,11 @@ function MarkdownContent() {
               {children}
             </a>
           ),
-          // p: ({ children }) => <div>{children}</div>,
+          table: ({ children, ...props }) => (
+            <table {...props} className="table table-striped table-bordered">
+              {children}
+            </table>
+          ),
         }}
       >
         {articleContent}
