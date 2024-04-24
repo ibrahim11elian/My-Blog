@@ -26,6 +26,11 @@ function MarkdownContent() {
               {children}
             </table>
           ),
+          p: ({ children, ...props }) => (
+            <p {...props} className=" fw-light ">
+              {children}
+            </p>
+          ),
         }}
       >
         {articleContent}
