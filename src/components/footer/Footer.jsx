@@ -10,8 +10,8 @@ import { SiLeetcode } from "react-icons/si";
 
 function Footer() {
   return (
-    <footer className="footer text-center background pb-3 ">
-      <div className="container d-flex flex-wrap gap-3 justify-content-sm-start ">
+    <footer className="footer text-center container background pb-3">
+      <div className="container p-0  d-flex flex-wrap gap-2 gap-md-3 justify-content-sm-start w-100 w-lg-75 mx-auto">
         <span className="text pt-1">
           Script Symphony &copy; {new Date().getFullYear()}
         </span>
