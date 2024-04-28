@@ -34,6 +34,10 @@
 }
 
 .markdown-container{
+    width: 100%;
+    @media screen and (min-width: 992px) {
+        width: 75%;
+    }
     .small-code {    
     border-radius: 6px;
     margin: 0;
@@ -45,5 +49,11 @@
     img{
         max-width: 100%;
         margin: 2px 0;
+    }
+}
+
+.w-lg-75{
+    @media screen and (min-width: 992px) {
+        width: 75% !important;
     }
 }

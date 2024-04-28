@@ -39,7 +39,7 @@ function MarkdownContent() {
     [articleContent]
   );
   return (
-    <article className="mt-4 markdown-container pb-1">
+    <article className="mt-4 markdown-container lh-lg  pb-1 mx-auto">
       {memoizedMarkdown}
     </article>
   );

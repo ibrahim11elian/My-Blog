@@ -34,26 +34,28 @@ function Article() {
     <main className="background">
       <div className="container">
         <div
-          className="article-image mx-md-5 px-md-5"
+          className="article-image px-md-5 mx-auto w-100 w-lg-75"
           style={{ height: "20rem" }}
         >
           <img
             src={article.cover}
-            className=" object-fit-cover w-100 h-100 "
+            className="object-fit-cover w-100 h-100 "
             alt={article.title}
           />
         </div>
-        <div className="d-flex flex-column mt-4 px-md-5 mx-md-5">
-          <h2 className="title text text-capitalize">{article.title}</h2>
-          <div className="info d-flex gap-3 article-text">
-            <h6 className="author text">Written by {article.author}</h6>
+        <div className="d-flex flex-column mt-4 px-md-5 mx-auto">
+          <h2 className="title text text-capitalize w-100 w-lg-75 mx-auto">
+            {article.title}
+          </h2>
+          <div className="info d-flex flex-wrap article-text w-100 w-lg-75 mx-auto">
+            <h6 className="author text px-1">Written by {article.author}</h6>
             {"•"}
-            <div className="date">{formatDate(article.date)}</div>
+            <div className="date px-1">{formatDate(article.date)}</div>
             {"•"}
-            <span>{readingTime(article.content).text}</span>
+            <span className="px-1">{readingTime(article.content).text}</span>
           </div>
           {article.tags && article.tags.length ? (
-            <div className="badges d-flex flex-wrap gap-2 mt-auto ">
+            <div className="badges d-flex flex-wrap gap-2 w-100 w-lg-75 mx-auto mt-2">
               {article.tags.map((tag, index) => {
                 return (
                   <span
@@ -78,7 +80,7 @@ export default memo(Article);
 
 const ContentPlaceholder = () => {
   return (
-    <div className="card-text placeholder-glow mt-5 mb-4 d-flex flex-column gap-2 pb-1 ">
+    <div className="card-text placeholder-glow mt-5 mb-4 d-flex flex-column gap-2 pb-1 w-100 w-lg-75 mx-auto">
       <span className="placeholder rounded-1 col-6"></span>
       <span className="placeholder rounded-1 col-7"></span>
       <h2>
