@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import { useMemo } from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -16,21 +18,40 @@ function MarkdownContent() {
         rehypePlugins={[rehypeSlug, rehypeRaw]}
         components={{
           code: CodeHighlighter,
-          a: ({ children, ...props }) => (
-            <a {...props} style={{ textDecoration: "none" }}>
-              {children}
-            </a>
-          ),
-          table: ({ children, ...props }) => (
-            <table {...props} className="table table-striped table-bordered">
-              {children}
-            </table>
-          ),
-          p: ({ children, ...props }) => (
-            <p {...props} className=" fw-light ">
-              {children}
-            </p>
-          ),
+          a: ({ children, ...props }) => {
+            const { node, ...restProps } = props;
+
+            return (
+              <a
+                {...restProps}
+                style={{ textDecoration: "none" }}
+                target="_blank"
+              >
+                {children}
+              </a>
+            );
+          },
+          table: ({ children, ...props }) => {
+            const { node, ...restProps } = props;
+
+            return (
+              <table
+                {...restProps}
+                className="table table-striped table-bordered"
+              >
+                {children}
+              </table>
+            );
+          },
+          p: ({ children, ...props }) => {
+            const { node, ...restProps } = props;
+
+            return (
+              <p {...restProps} className="article-text">
+                {children}
+              </p>
+            );
+          },
         }}
       >
         {articleContent}
