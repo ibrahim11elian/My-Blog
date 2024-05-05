@@ -38,9 +38,12 @@ main{
   .shadow {
     box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.2705882353) !important;
   }
-  .card-text,
-  .article-text {
+  .card-text
+  {
     color: $card-text-color-light;
+  }
+  .article-text{
+    color: $light-article-color;
   }
   .tag {
     background-color: $tag-background-light;
@@ -73,9 +76,12 @@ main{
   .shadow {
     box-shadow: 0px 0px 10px 0px rgb(171 171 171 / 6%) !important;
   }
-  .card-text,
-  .article-text {
+  .card-text
+   {
     color: $card-text-color-dark;
+  }
+  .article-text{
+    color: $dark-article-color;
   }
   .tag {
     background-color: $tag-background-dark;
