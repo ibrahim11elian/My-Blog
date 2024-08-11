@@ -18,19 +18,6 @@ function MarkdownContent() {
         rehypePlugins={[rehypeSlug, rehypeRaw]}
         components={{
           code: CodeHighlighter,
-          a: ({ children, ...props }) => {
-            const { node, ...restProps } = props;
-
-            return (
-              <a
-                {...restProps}
-                style={{ textDecoration: "none" }}
-                target="_blank"
-              >
-                {children}
-              </a>
-            );
-          },
           table: ({ children, ...props }) => {
             const { node, ...restProps } = props;
 
